@@ -59,4 +59,11 @@ export class CartComponent implements OnInit {
     }
     this.calculate_total(); 
   }
+  remove_item(product_index) {
+    if(confirm('Are you sure to remove this item from cart?')) {
+      this.cart_arr.splice(product_index, 1);
+      localStorage.setItem('cart', JSON.stringify(this.cart_arr));
+      this.calculate_total();
+    }
+  }
 }

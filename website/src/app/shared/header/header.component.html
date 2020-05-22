@@ -5,13 +5,13 @@
                 <input type="text" class="input-block-level search-query" Placeholder="eg. T-sirt">
             </form>
         </div>
-        <div class="span8">
+        <div class="span8" *ngIf="cart_items_count > 0">
             <div class="account pull-right">
                 <ul class="user-menu">				
                     <!-- <li><a href="#">My Account</a></li> -->
                     <li>
                         <a routerLink="/cart">Your Cart</a>
-                        <span *ngIf="cart_items_count > 0" style="color:#eb4800;font-weight:bold;"> ({{cart_items_count}})</span>
+                        <span style="color:#eb4800;font-weight:bold;"> ({{cart_items_count}})</span>
                     </li>
                     <li><a routerLink="/order">Checkout</a></li>					
                     <!-- <li><a href="register.html">Login</a></li>			 -->
