@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Category;
+use App\Customer;
 use Validator;
 class pages_controller extends Controller
 {
@@ -36,7 +37,7 @@ class pages_controller extends Controller
             'product_id' => 'required|numeric',
         ]);
         if ($validator->fails()) {
-            $this->response['msg']['text'] = $validator->messages();   
+            $this->response['msg'] = $validator->messages();   
         }
         else {
             $this->response['data']['product'] = Product::where('id', $product_id)->first();
@@ -46,6 +47,62 @@ class pages_controller extends Controller
             }    
             else {  
                 $this->response['msg']['text'] = 'Product not found.';
+            }
+        }
+        return $this->response;
+    }
+
+    ######### FUNCTION TO GET PRODUCT AND RELATED PRODUCTS #########
+    function place_order(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|regex:/^[a-zA-Z ]+$/|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|min:10|numeric',
+            'address' => 'required|max:255',
+            'city' => 'required|max:255',
+            'postcode' => 'required|max:255',
+            'state' => 'required|max:255',
+            'purchased_items' => 'required|array'
+        ]);
+        if ($validator->fails()) {
+            $this->response['msg'] = $validator->messages();  
+            return $this->response; 
+        }
+        else {
+            foreach($request->purchased_items as $purchased_item) {
+                $items_validator = Validator::make($purchased_item, [
+                    'id' => 'required|numeric',
+                    'quantity' => 'required|numeric|not_in:0'
+                ]);
+                if($items_validator->fails()) {
+                    $this->response['msg'] = $items_validator->messages(); 
+                    return $this->response;  
+                }
+                $product_ids_arr[] = $purchased_item['id'];
+                $items_arr[$purchased_item['id']] = $purchased_item['quantity'];
+            }
+            $products = Product::whereIn('id', $product_ids_arr)->where('status', 1)->get();
+            if(count($products) != count($request->purchased_items)) {
+                $this->response['msg']['text'] = "Products mismatch. Please regenrate your order and add items again to the cart.";
+                return $this->response;
+            }
+            else {
+                foreach($products as $product) {
+                    if($items_arr[$product->id] > $product->pcs) {
+                        $this->response['msg']['text'] = $product->product_name." quantity is exceeded than available stock. Please regenrate your order and add items again to the cart.";
+                        return $this->response;
+                    }
+                    else {
+                        $save_arr[$product->id] = $product->pcs-$items_arr[$product->id];
+                    }
+                }
+                foreach($save_arr as $product_id => $pcs) {
+                    Product::where('id', $product_id)->update(['pcs' => $pcs]);
+                }
+                $customer_data = $request->except(['purchased_items']);
+                Customer::create($customer_data);
+                $this->response['msg']['text'] = "Order has been confirmed and placed successfully";
+                $this->response['success'] = 1;
             }
         }
         return $this->response;

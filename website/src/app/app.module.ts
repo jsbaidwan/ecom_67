@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { ProductsComponent } from './products/products/products.component';
@@ -27,6 +28,7 @@ import { OrderComponent } from './products/order/order.component';
     HttpClientModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     ToastrModule.forRoot()
   ],
   providers: [],

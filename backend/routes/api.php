@@ -46,6 +46,7 @@ Route::post('update_product', 'products_controller@update_product')->middleware(
 Route::get('get_products', 'pages_controller@get_products');
 Route::get('get_categories', 'pages_controller@get_categories');
 Route::get('get_product/{id}', 'pages_controller@get_product');
+Route::post('place_order/', 'pages_controller@place_order');
 
 
 ######## WEBSITE ROUTES END ###########

@@ -38,6 +38,7 @@ export class CartComponent implements OnInit {
     if(type == 'sub') {
       if(this.cart_arr[index].quantity > 1) {
         this.cart_arr[index].quantity = this.cart_arr[index].quantity-1;
+        localStorage.setItem('cart', JSON.stringify(this.cart_arr));
       }
       else {
         this.alert.showError("Quantity can not be less than 1.", "");
@@ -45,8 +46,9 @@ export class CartComponent implements OnInit {
       }
     }
     else if(type == 'add') {
-      if(this.cart_arr[index].quantity < this.cart_arr[index].pcs || this.cart_arr[index].quantity == this.cart_arr[index].pcs) {
+      if(this.cart_arr[index].quantity < this.cart_arr[index].pcs) {
         this.cart_arr[index].quantity = this.cart_arr[index].quantity+1;
+        localStorage.setItem('cart', JSON.stringify(this.cart_arr));
       }
       else {
         this.alert.showError("Quantity exceeded than available stock.", "");

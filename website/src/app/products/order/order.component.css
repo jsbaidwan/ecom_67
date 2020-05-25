@@ -1,0 +1,7 @@
+span.required {
+    color:red;
+}
+.order_form .error {
+    color:red;
+    font-size:10px;
+}

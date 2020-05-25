@@ -1,1 +1,122 @@
-<p>order works!</p>
+
+<section class="header_text">
+</section>	
+<section class="main-content">
+    <div class="row">
+        <div class="span12">
+            <div class="accordion" id="accordion2">
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Checkout Options</a>
+                    </div>
+                    <div id="collapseOne" class="accordion-body in collapse">
+                        <form class="order_form" [formGroup]="order_form" (ngSubmit)="onSubmit()">
+                            <div class="accordion-inner">
+                                <div class="row-fluid">
+                                    <div class="span6">
+                                        <h4>Your Personal Details</h4>
+                                        <div class="control-group">
+                                            <label class="control-label"><span class="required">*</span> First Name</label>
+                                            <div class="controls">
+                                                <input type="text" class="input-xxlarge" formControlName="first_name" required autofocus>
+                                                <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback">
+                                                    <div class="error" *ngIf="f.first_name.errors.required">First Name is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">Last Name</label>
+                                            <div class="controls">
+                                                <input type="text" class="input-xxlarge" formControlName="last_name">
+                                            </div>
+                                        </div>					  
+                                        <div class="control-group">
+                                            <label class="control-label"><span class="required">*</span> Email Address</label>
+                                            <div class="controls">
+                                                <input type="text" class="input-xxlarge" formControlName="email" required autofocus>
+                                                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                                    <div class="error" *ngIf="f.email.errors.required">Email is required</div>
+                                                    <div class="error" *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label"><span class="required">*</span> Phone</label>
+                                            <div class="controls">
+                                                <input type="text" class="input-xxlarge" formControlName="phone" required autofocus>
+                                                <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+                                                    <div class="error" *ngIf="f.phone.errors.required">Phone is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">Comment</label>
+                                            <div class="controls">
+                                                <textarea type="text" formControlName="comment" style="height:22px;" class="input-xxlarge"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="span6">
+                                        <h4>Your Address</h4>			
+                                        <div class="control-group">
+                                            <label class="control-label"><span class="required">*</span> Address:</label>
+                                            <div class="controls">
+                                                <input type="text" class="input-xxlarge" formControlName="address" required autofocus>
+                                                <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                                                    <div class="error" *ngIf="f.address.errors.required">Address is required</div>
+                                                </div>
+                                            </div>
+                                        </div>	  
+                                        <div class="control-group">
+                                            <label class="control-label"><span class="required">*</span> City:</label>
+                                            <div class="controls">
+                                                <input type="text" class="input-xxlarge" formControlName="city" required autofocus>
+                                                <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                                                    <div class="error" *ngIf="f.city.errors.required">City is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label"><span class="required">*</span> Post Code:</label>
+                                            <div class="controls">
+                                                <input type="text" class="input-xxlarge" formControlName="postcode" required autofocus>
+                                                <div *ngIf="submitted && f.postcode.errors" class="invalid-feedback">
+                                                    <div class="error" *ngIf="f.postcode.errors.required">First Name is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label"><span class="required">*</span> Region / State:</label>
+                                            <div class="controls">
+                                                <select name="zone_id" class="input-xxlarge" formControlName="state">
+                                                    <option value="punjab">Punjab</option>
+                                                </select>
+                                                <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                                                    <div class="error" *ngIf="f.state.errors.required">State is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label"><span class="required">*</span> Country:</label>
+                                            <div class="controls">
+                                                <select class="input-xxlarge" formControlName="country">
+                                                    <option value="1">India</option>
+                                                </select>
+                                                <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                                                    <div class="error" *ngIf="f.country.errors.required">Country is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button class="btn btn-primary" style="background:#eb4800;border-color:#eb4800;width: 300px;height: 50px;font-size: 18px;">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>				
+        </div>
+    </div>
+</section>		
