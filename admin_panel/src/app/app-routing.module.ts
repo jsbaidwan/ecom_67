@@ -11,6 +11,8 @@ import { EditProductCategoryComponent } from './product_categories/edit-product-
 import { ProductsComponent } from './products/products/products.component';
 import { AddProductComponent } from './products/add-product/add-product.component';
 import { EditProductComponent } from './products/edit-product/edit-product.component';
+import { OrdersComponent } from './orders/orders/orders.component';
+import { OrderDetailComponent } from './orders/order-detail/order-detail.component';
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
@@ -23,6 +25,8 @@ const routes: Routes = [
   { path: 'products', canActivate : [AuthGuard], component: ProductsComponent },
   { path: 'products/add_product', canActivate : [AuthGuard], component: AddProductComponent },
   { path: 'products/:id', canActivate : [AuthGuard], component: EditProductComponent },
+  { path: 'orders', canActivate : [AuthGuard], component: OrdersComponent },
+  { path: 'order_detail/:id', canActivate : [AuthGuard], component: OrderDetailComponent },
 ];
 
 @NgModule({

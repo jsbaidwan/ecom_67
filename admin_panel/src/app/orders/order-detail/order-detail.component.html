@@ -1,0 +1,115 @@
+<div class="main-container">
+    <div class="invoice-container">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-6">
+                    <div class="invoice-toolbar">
+                        <div class="btn-toolbar">
+                            <div class="btn-group">
+                                <!-- <button type="button" class="btn btn-default"><i class="fa fa-print"></i> Print</button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="invoice-title">
+                        <h2>INVOICE</h2>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h4>From</h4>
+                    <address>Test</address>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <ul class="invoice-info">
+                        <li>
+                            <label>Order ID</label> #{{order_details.order_unique_id}}
+                        </li>
+                        <li>
+                            <label>Order Date</label> {{ order_details.created_at | date: 'dd-MM-yyyy'}}
+                        </li>
+                        <li>
+                            <label>Customer Name</label> {{ order_details.customers.first_name }} {{ order_details.customers.last_name }}
+                        </li>
+                        <li>
+                            <label>Customer Email</label> {{order_details.customers.email}}
+                        </li>
+                        <li>
+                            <label>Customer Phone</label> {{order_details.customers.phone}}
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h4>Invoice To</h4>
+                    <address>
+                        {{order_details.customers.address}}<br>
+                        {{order_details.customers.city}}, {{order_details.customers.state | titlecase}} {{order_details.customers.postcode}}<br>
+                        <abbr title="Phone">Phone:</abbr> {{order_details.customers.phone}}
+                    </address>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table w-order-list table-striped dt-stack-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>
+                                        Product name
+                                    </th>
+                                    <th>
+                                        Unit Price
+                                    </th>
+                                    <th>
+                                        Quantity
+                                    </th>
+                                    <th>
+                                        Total Price
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="order_details.order_items.length > 0">
+                                <tr *ngFor="let order_item of order_details.order_items">
+                                    <td>
+                                        #{{order_item.order_id}}
+                                    </td>
+                                    <td>
+                                        {{order_item.product_name}}
+                                    </td>
+                                    <td>
+                                        ${{order_item.unit_price}}
+                                    </td>
+                                    <td>
+                                        {{order_item.quantity}}
+                                    </td>
+                                    <td>
+                                        ${{order_item.total_price}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                    </td>
+                                    <td>
+                                        <span>Sub Total</span><br><br>
+                                        <span>Tax({{order_details.tax}}%)</span><br><br>
+                                        <span class="amount-due">Total Amount</span>
+                                    </td>
+                                    <td>
+                                        <span>${{order_details.amount}}</span><br><br>
+                                        <span>${{order_details.tax_amount}}</span><br><br>
+                                        <span class="amount-due">${{order_details.total_amount}}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

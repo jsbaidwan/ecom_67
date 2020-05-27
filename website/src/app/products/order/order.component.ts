@@ -51,7 +51,7 @@ export class OrderComponent implements OnInit {
       (data) => {
         if(data.success) {
           this.alert.showSuccess(data.msg.text, "");
-          localStorage.removeItem('currentUser');
+          localStorage.removeItem('cart');
           this.router.navigate(['']);
         }
         else {

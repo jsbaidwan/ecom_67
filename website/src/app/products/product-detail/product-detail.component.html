@@ -28,13 +28,20 @@
                     </address>									
                     <h4><strong>Price: ${{products_arr.product.price}}</strong></h4>
                 </div>
-                <div class="span5" style="margin-top:20px;margin-bottom:20px;">
-                    <button *ngIf="added_in_cart;else content" routerLink="/cart"  class="btn btn-warning" style="width:200px;height:50px;">Go to cart</button>
-                    <ng-template #content><button (click)="add_to_cart(products_arr.product.id,products_arr.product.product_name,products_arr.product.price,products_arr.product.pcs)" class="btn btn-warning" style="width:200px;height:50px;">Add to cart</button></ng-template>
-                </div>
-                <div class="span5">
-                    <a routerLink="/order"><button class="btn btn-success" style="width:200px;height:50px;">Buy Now</button></a>
-                </div>							
+                <div *ngIf="products_arr.product.pcs > 0;else product_unavailable">
+                    <div class="span5" style="margin-top:20px;margin-bottom:20px;">
+                        <button *ngIf="added_in_cart;else content" routerLink="/cart"  class="btn btn-warning" style="width:200px;height:50px;">Go to cart</button>
+                        <ng-template #content><button (click)="add_to_cart(products_arr.product.id,products_arr.product.product_name,products_arr.product.price,products_arr.product.pcs)" class="btn btn-warning" style="width:200px;height:50px;">Add to cart</button></ng-template>
+                    </div>
+                    <div class="span5">
+                        <a routerLink="/order"><button class="btn btn-success" style="width:200px;height:50px;">Buy Now</button></a>
+                    </div>
+                </div>	
+                <ng-template #product_unavailable>
+                    <div class="span5" style="margin-top:20px;margin-bottom:20px;color:red;font-size:20px;">
+                        Product out of stock    
+                    </div>
+                </ng-template>				
             </div>
             <div class="row">
                 <div class="span9">

@@ -41,13 +41,16 @@ Route::post('update_product_status', 'products_controller@update_product_status'
 Route::get('products/{id}', 'products_controller@get_product')->middleware('auth:api');
 Route::post('update_product', 'products_controller@update_product')->middleware('auth:api');
 
+######## Orders ###########
+Route::get('get_orders', 'orders_controller@get_orders')->middleware('auth:api');
+Route::get('get_order_details/{id}', 'orders_controller@get_order_details')->middleware('auth:api');
+
 
 ######## WEBSITE ROUTES START ###########
 Route::get('get_products', 'pages_controller@get_products');
 Route::get('get_categories', 'pages_controller@get_categories');
 Route::get('get_product/{id}', 'pages_controller@get_product');
 Route::post('place_order/', 'pages_controller@place_order');
-
 
 ######## WEBSITE ROUTES END ###########
 
