@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { RouterModule } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -49,6 +50,7 @@ import { OrderDetailComponent } from './orders/order-detail/order-detail.compone
     ReactiveFormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    RouterModule,
     ToastrModule.forRoot()
   ],
   providers: [
