@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Router} from '@angular/router';
 import { NotificationService } from '../../services/toaster_notification/notification.service';
+import{ AuthService } from '../../services/auth/auth.service';
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
@@ -13,7 +14,14 @@ export class EditProfileComponent implements OnInit {
   edit_profile_form: FormGroup;
   submitted = false;
   response_data = '';
-  constructor(private http: HttpClient, private formBuilder: FormBuilder, private router: Router, private notifyService : NotificationService) {}
+  constructor(
+    private http: HttpClient, 
+    private formBuilder: FormBuilder,
+    private router: Router, 
+    private auth_service: AuthService,
+    private notifyService : NotificationService
+    ) 
+    {}
 
   ngOnInit() {
     this.http.get<any>('http://localhost/pos/backend/api/user').subscribe(
@@ -55,6 +63,7 @@ export class EditProfileComponent implements OnInit {
           user_data['user_details']['last_name'] = this.edit_profile_form.get('last_name').value;
           user_data['user_details']['email'] = this.edit_profile_form.get('email').value;
           user_data['user_details']['phone'] = this.edit_profile_form.get('phone').value;
+          this.auth_service.changeMessage(user_data)
           localStorage.setItem('currentUser', JSON.stringify(user_data));
           this.notifyService.showSuccess(data.msg.text, "");
         }

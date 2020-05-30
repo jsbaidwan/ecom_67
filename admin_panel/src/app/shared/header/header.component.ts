@@ -8,10 +8,13 @@ import{ AuthService } from '../../services/auth/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  currentUser = JSON.parse(AuthService.currentUser);
-  constructor(public router: Router) {}
+  currentUser:any;
+  constructor(public router: Router, private auth_service:AuthService) {}
 
   ngOnInit(): void {
+    this.auth_service.currentMessage.subscribe(message => {
+      this.currentUser = message;
+    })
   }
 
   logout() {
