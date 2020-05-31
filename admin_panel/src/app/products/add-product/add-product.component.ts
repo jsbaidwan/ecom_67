@@ -34,6 +34,7 @@ export class AddProductComponent implements OnInit {
       product_name: ['', Validators.required],
       category_id: ['', Validators.required],
       price: ['', Validators.required],
+      pcs: ['', Validators.required],
       product_description: [''],
     });
   }
@@ -47,6 +48,7 @@ export class AddProductComponent implements OnInit {
         product_name: this.add_product_form.get('product_name').value,
         category_id: this.add_product_form.get('category_id').value,
         price: this.add_product_form.get('price').value,
+        pcs: this.add_product_form.get('pcs').value,
         product_description: this.add_product_form.get('product_description').value,
     }).subscribe(
       (data) => {

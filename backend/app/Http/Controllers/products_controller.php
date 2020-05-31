@@ -20,6 +20,7 @@ class products_controller extends Controller
             'product_description' => 'max:255',
             'category_id' => 'required|numeric',
             'price' => 'required|numeric',
+            'pcs' => 'required|numeric|not_in:0',
         ]);
         if ($validator->fails()) {
             $this->response['msg']['text'] = $validator->messages();           
@@ -32,7 +33,7 @@ class products_controller extends Controller
                 $this->response['success'] = 1;
             } 
             else {
-                $this->response['msg']['text'] = 'An error occured while adding product.';
+                $this->response['msg']['text'] = 'An error occurred while adding product.';
             }
         }
         return $this->response;
@@ -41,7 +42,7 @@ class products_controller extends Controller
     ######### FUNCTION TO ADD PRODUCT #######
     function products() {
         $user_id = Auth::user()->id;
-        $this->response['data'] = Product::where('user_id', $user_id)->get();
+        $this->response['data'] = Product::where('user_id', $user_id)->orderBy('product_name', 'asc')->get();
         $this->response['success'] = 1;
         return $this->response;
     }
@@ -105,6 +106,7 @@ class products_controller extends Controller
             'product_description' => 'max:255',
             'category_id' => 'required|numeric',
             'price' => 'required|numeric',
+            'pcs' => 'required|numeric',
         ]);
         if ($validator->fails()) {
             $this->response['msg']['text'] = $validator->messages();           

@@ -29,6 +29,7 @@ export class EditProductComponent implements OnInit {
             product_name: [data.data.product_name, Validators.required],
             category_id: [data.data.category_id, Validators.required],
             price: [data.data.price, Validators.required],
+            pcs: [data.data.pcs, Validators.required],
             product_description: [data.data.product_description],
           });
         }
@@ -51,6 +52,7 @@ export class EditProductComponent implements OnInit {
     this.http.post<any>('http://localhost/pos/backend/api/update_product', {
       product_name: this.edit_product_form.get('product_name').value,
       price: this.edit_product_form.get('price').value,
+      pcs: this.edit_product_form.get('pcs').value,
       product_description: this.edit_product_form.get('product_description').value,
       category_id: this.edit_product_form.get('category_id').value,
       product_id: this.product_id,

@@ -24,6 +24,7 @@ export class ProductDetailComponent implements OnInit {
       (data) => {
         if(data.success) {
           this.products_arr = data.data;  
+          console.log(this.products_arr);
           if(localStorage.getItem('cart') != null) {
             this.cart_arr = localStorage.getItem('cart');
             this.cart_arr = JSON.parse(this.cart_arr);

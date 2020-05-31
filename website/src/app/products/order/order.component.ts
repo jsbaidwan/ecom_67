@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Router} from '@angular/router';
 import { NotificationService } from '../../services/notification/notification.service';
+import { SharedService } from '../../services/shared/shared.service';
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
@@ -11,7 +12,13 @@ import { NotificationService } from '../../services/notification/notification.se
 export class OrderComponent implements OnInit {
   order_form: FormGroup;
   submitted = false;
-  constructor(private http: HttpClient, private formBuilder: FormBuilder, private router: Router, private alert : NotificationService) {}
+  constructor(
+    private http: HttpClient,
+    private formBuilder: FormBuilder, 
+    private router: Router, 
+    private alert : NotificationService,
+    private data: SharedService,
+  ) {}
 
   ngOnInit(): void {
     this.order_form = this.formBuilder.group({
@@ -50,6 +57,7 @@ export class OrderComponent implements OnInit {
     }).subscribe(
       (data) => {
         if(data.success) {
+          this.data.changeMessage('0');
           this.alert.showSuccess(data.msg.text, "");
           localStorage.removeItem('cart');
           this.router.navigate(['']);
