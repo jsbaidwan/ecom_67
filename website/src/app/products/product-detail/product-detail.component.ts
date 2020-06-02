@@ -3,6 +3,7 @@ import { NotificationService } from '../../services/notification/notification.se
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import {Router, NavigationEnd } from '@angular/router';
+import { ProgressBarService } from '../../services/progress_bar/progress-bar.service'
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
@@ -19,17 +20,20 @@ export class ProductDetailComponent implements OnInit {
     private alert:NotificationService, 
     private route: ActivatedRoute, 
     private router: Router, 
-    private http:HttpClient
+    private http:HttpClient,
+    public progress_bar: ProgressBarService
   ) 
   { 
     router.events.subscribe((val) => {
       if(val instanceof NavigationEnd) {
+        this.progress_bar.show();
         this.added_in_cart = false;
         this.route.params.subscribe(params => {
           this.product_id = params['id'];
         });
         this.http.get<any>('http://localhost/pos/backend/api/get_product/'+this.product_id).subscribe(
           (data) => {
+            this.progress_bar.hide();
             if(data.success) {
               this.product_details = data.data.product;
               this.related_products_arr = data.data.related_products;  
@@ -45,11 +49,15 @@ export class ProductDetailComponent implements OnInit {
             }
             else {
               for(var i in data.msg) {
+                this.progress_bar.hide();
                 this.alert.showError(data.msg[i], "");
               }  
             }
           },
-          (error) => this.alert.showError(error.message, "")
+          (error => {
+            this.progress_bar.hide();
+            this.alert.showError(error.message, "")
+          })
         );
       }
     });

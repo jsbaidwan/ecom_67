@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '../../services/notification/notification.service'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ProgressBarService } from '../../services/progress_bar/progress-bar.service'
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -8,29 +9,34 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class ProductsComponent implements OnInit {
   products_arr = [];
-  showSpinner: boolean = true;
   constructor(
     private alert:NotificationService, 
     private http:HttpClient,
+    public progress_bar: ProgressBarService
   ) 
   { 
     
   }
 
   ngOnInit(): void {
+    this.progress_bar.show();
     this.http.get<any>('http://localhost/pos/backend/api/get_products').subscribe(
       (data) => {
-        this.showSpinner = false;
+        this.progress_bar.hide();
         if(data.success) {
           this.products_arr = data.data;  
         }
         else {
+          this.progress_bar.hide();
           for(var i in data.msg) {
             this.alert.showError(data.msg[i], "");
           }  
         }
       },
-      (error) => this.alert.showError(error.message, "")
+      (error => {
+        this.progress_bar.hide();
+        this.alert.showError(error.message, "")
+      })
     );
   }
 

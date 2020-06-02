@@ -7,8 +7,12 @@
 		<meta name="description" content="">
 	</head>
     <body>	
-		<mat-progress-bar mode='determinate' *ngIf="spinner.visibility | async"></mat-progress-bar>
-		<!-- <mat-progress-spinner mode="determinate" value='66'></mat-progress-spinner> -->
+		<mat-progress-bar mode='indeterminate' *ngIf="show_progress_bar | async"></mat-progress-bar>
+		<div class="spinner-wrap" *ngIf="show_spinner | async">
+			<div class="spinner">
+				<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+			</div>
+		</div>
         <app-header></app-header>
         <div id="wrapper" class="container">
             <section class="navbar main-menu">

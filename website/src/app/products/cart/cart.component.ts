@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '../../services/notification/notification.service';
 import { SharedService } from '../../services/shared/shared.service';
 import {Router } from '@angular/router';
+import { ProgressBarService } from '../../services/progress_bar/progress-bar.service'
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -13,7 +14,8 @@ export class CartComponent implements OnInit {
   constructor(
     private alert:NotificationService, 
     private data: SharedService,
-    private router: Router
+    private router: Router,
+    public progress_bar: ProgressBarService
   ) { }
 
   ngOnInit(): void {

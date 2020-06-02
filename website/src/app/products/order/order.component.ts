@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Router} from '@angular/router';
 import { NotificationService } from '../../services/notification/notification.service';
 import { SharedService } from '../../services/shared/shared.service';
+import { SpinnerService } from '../../services/spinner/spinner.service'
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
@@ -18,6 +19,7 @@ export class OrderComponent implements OnInit {
     private router: Router, 
     private alert : NotificationService,
     private data: SharedService,
+    private spinner: SpinnerService,
   ) {}
 
   ngOnInit(): void {
@@ -41,6 +43,7 @@ export class OrderComponent implements OnInit {
     if (this.order_form.invalid) {
         return;
     }
+    this.spinner.show();
     var purchased_items = JSON.parse(localStorage.getItem('cart'));
     this.http.post<any>('http://localhost/pos/backend/api/place_order', {
       first_name: this.order_form.get('first_name').value,
@@ -56,6 +59,7 @@ export class OrderComponent implements OnInit {
       purchased_items: purchased_items
     }).subscribe(
       (data) => {
+        this.spinner.hide();
         if(data.success) {
           this.data.changeMessage('0');
           this.alert.showSuccess(data.msg.text, "");
@@ -63,12 +67,16 @@ export class OrderComponent implements OnInit {
           this.router.navigate(['']);
         }
         else {
+          this.spinner.hide();
           for(var i in data.msg) {
             this.alert.showError(data.msg[i], "");
           }  
         }
       },
-      (error) => this.alert.showError(error.message, "")
+      (error => {
+        this.spinner.hide();
+        this.alert.showError(error.message, "")
+      })
     );
   }
 }
