@@ -8,11 +8,19 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class ProductsComponent implements OnInit {
   products_arr = [];
-  constructor(private alert:NotificationService, private http:HttpClient) { }
+  showSpinner: boolean = true;
+  constructor(
+    private alert:NotificationService, 
+    private http:HttpClient,
+  ) 
+  { 
+    
+  }
 
   ngOnInit(): void {
     this.http.get<any>('http://localhost/pos/backend/api/get_products').subscribe(
       (data) => {
+        this.showSpinner = false;
         if(data.success) {
           this.products_arr = data.data;  
         }

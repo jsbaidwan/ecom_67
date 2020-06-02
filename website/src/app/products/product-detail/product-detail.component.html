@@ -24,18 +24,18 @@
                 </div>
                 <div class="span5">
                     <address>
-                        <h4><strong>Product Name:</strong> <span>{{products_arr.product.product_name}}</span></h4>							
+                        <h4><strong>Product Name:</strong> <span>{{product_details.product_name}}</span></h4>							
                     </address>									
-                    <h4><strong>Price: ${{products_arr.product.price}}</strong></h4>
+                    <h4><strong>Price: ${{product_details.price}}</strong></h4>
                 </div>
-                <div *ngIf="products_arr.product.pcs > 0;else product_unavailable">
+                <div *ngIf="product_details.pcs > 0;else product_unavailable">
                     <div class="span5" style="margin-top:20px;margin-bottom:20px;">
                         <button *ngIf="added_in_cart;else content" routerLink="/cart"  class="btn btn-warning" style="width:200px;height:50px;">Go to cart</button>
-                        <ng-template #content><button (click)="add_to_cart(products_arr.product.id,products_arr.product.product_name,products_arr.product.price,products_arr.product.pcs)" class="btn btn-warning" style="width:200px;height:50px;">Add to cart</button></ng-template>
+                        <ng-template #content><button (click)="add_to_cart(product_details.id,product_details.product_name,product_details.price,product_details.pcs)" class="btn btn-warning" style="width:200px;height:50px;">Add to cart</button></ng-template>
                     </div>
-                    <div class="span5">
+                    <!-- <div class="span5">
                         <a routerLink="/order"><button class="btn btn-success" style="width:200px;height:50px;">Buy Now</button></a>
-                    </div>
+                    </div> -->
                 </div>	
                 <ng-template #product_unavailable>
                     <div class="span5" style="margin-top:20px;margin-bottom:20px;color:red;font-size:20px;">
@@ -49,10 +49,10 @@
                         <li class="active"><a href="#home">Description</a></li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane active" id="home">{{products_arr.product.product_description}}</div>
+                        <div class="tab-pane active" id="home">{{product_details.product_description}}</div>
                     </div>									 							
                 </div>						
-                <div class="span9" *ngIf="products_arr.related_products.length > 0">	
+                <div class="span9" *ngIf="related_products_arr.length > 0">	
                     <br>
                     <h4 class="title">
                         <span class="pull-left"><span class="text"><strong>Related</strong> Products</span></span>
@@ -64,7 +64,7 @@
                         <div class="carousel-inner">
                             <div class="active item">
                                 <ul class="thumbnails listing-products">
-                                    <li class="span3" *ngFor="let product of products_arr.related_products">
+                                    <li class="span3" *ngFor="let product of related_products_arr">
                                         <div class="product-box">												
                                             <a routerLink="/product_detail/{{product.id}}"><img alt="" src="assets/themes/images/ladies/4.jpg"></a><br/>
                                             <a routerLink="/product_detail/{{product.id}}" class="title">{{product.product_name}}</a><br/>

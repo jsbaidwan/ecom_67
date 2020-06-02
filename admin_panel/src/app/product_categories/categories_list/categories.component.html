@@ -28,26 +28,31 @@
                 </th>
             </tr>
             </thead>
-            <tbody>
-            <tr *ngFor="let category of categories_arr;let indexOfelement=index;">
-                <td>
-                     {{category.category_name}}
-                </td>
-                <td class="tc-center">
-                    <label (click)="change_status(indexOfelement, category.status, category.id)" [ngClass]="category.status ? 'label label-info' : 'label label-warning'">
-                        <span *ngIf="category.status;else other_content">Active</span>
-                        <ng-template #other_content>Inactive</ng-template>
-                    </label>
-                </td>
-                <td class="tc-center">
-                    <div class="btn-toolbar" role="toolbar">
-                        <div class="btn-group" role="group">
-                            <a [routerLink]="[category.id]" class="btn btn-default btn-sm m-user-edit">Edit</a>
+            <tbody *ngIf="categories_arr.length > 0;else not_found">
+                <tr *ngFor="let category of categories_arr;let indexOfelement=index;">
+                    <td>
+                        {{category.category_name}}
+                    </td>
+                    <td class="tc-center">
+                        <label (click)="change_status(indexOfelement, category.status, category.id)" [ngClass]="category.status ? 'label label-info' : 'label label-warning'">
+                            <span *ngIf="category.status;else other_content">Active</span>
+                            <ng-template #other_content>Inactive</ng-template>
+                        </label>
+                    </td>
+                    <td class="tc-center">
+                        <div class="btn-toolbar" role="toolbar">
+                            <div class="btn-group" role="group">
+                                <a [routerLink]="[category.id]" class="btn btn-default btn-sm m-user-edit">Edit</a>
+                            </div>
                         </div>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
+                    </td>
+                </tr>
+                </tbody>
+                <ng-template #not_found>
+                    <tr>
+                        <td colspan="4" class="text-center" style="font-size:17px;padding:10px 0;">No category added yet.</td>
+                    </tr>
+                </ng-template>
             </table>
         </div>
             </div>

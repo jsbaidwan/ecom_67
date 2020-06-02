@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '../../services/notification/notification.service';
 import { SharedService } from '../../services/shared/shared.service';
+import {Router } from '@angular/router';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -9,13 +10,23 @@ import { SharedService } from '../../services/shared/shared.service';
 export class CartComponent implements OnInit {
   cart_arr:any = [];
   cart_details:any = [];
-  constructor(private alert:NotificationService, private data: SharedService) { }
+  constructor(
+    private alert:NotificationService, 
+    private data: SharedService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     if(localStorage.getItem('cart') != null) {
       this.cart_arr = localStorage.getItem('cart');
       this.cart_arr = JSON.parse(this.cart_arr);
+      if(this.cart_arr.length < 1) {
+        this.router.navigate(['']);
+      }
       this.calculate_total();
+    }
+    else {
+      this.router.navigate(['']);
     }
   }
   calculate_total() {

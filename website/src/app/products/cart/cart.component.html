@@ -21,9 +21,9 @@
                         <td><a href="product_detail.html"><img style="width:40px;" alt="" src="assets/themes/images/ladies/1.jpg"></a></td>
                         <td>{{cart.product_name}}</td>
                         <td>
-                            <button (click)="update_cart(indexOfelement,'sub')" class="cart-btn">-</button>
+                            <button [attr.disabled]="cart.quantity == 1 ? true:null" (click)="update_cart(indexOfelement,'sub')" class="cart-btn">-</button>
                             <input disabled type="text" value="{{cart.quantity}}" min="1" max="{{cart.pcs}}" placeholder="1" class="input-mini text-center">
-                            <button (click)="update_cart(indexOfelement,'add')" class="cart-btn">+</button>
+                            <button [attr.disabled]="cart.quantity == cart.pcs ? true:null" (click)="update_cart(indexOfelement,'add')" class="cart-btn">+</button>
                         </td>
                         <td>${{cart.price}}</td>
                         <td>${{cart.total}}</td>
