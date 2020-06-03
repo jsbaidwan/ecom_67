@@ -3,7 +3,7 @@
 </section>	
 <section class="main-content">
     <div class="row">
-        <div class="span12">
+        <div class="span8">
             <div class="accordion" id="accordion2">
                 <div class="accordion-group">
                     <div class="accordion-heading">
@@ -18,7 +18,7 @@
                                         <div class="control-group">
                                             <label class="control-label"><span class="required">*</span> First Name</label>
                                             <div class="controls">
-                                                <input type="text" class="input-xxlarge" formControlName="first_name" required autofocus>
+                                                <input type="text" class="input-xlarge" formControlName="first_name" required autofocus>
                                                 <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback">
                                                     <div class="error" *ngIf="f.first_name.errors.required">First Name is required</div>
                                                 </div>
@@ -27,13 +27,13 @@
                                         <div class="control-group">
                                             <label class="control-label">Last Name</label>
                                             <div class="controls">
-                                                <input type="text" class="input-xxlarge" formControlName="last_name">
+                                                <input type="text" class="input-xlarge" formControlName="last_name">
                                             </div>
                                         </div>					  
                                         <div class="control-group">
                                             <label class="control-label"><span class="required">*</span> Email Address</label>
                                             <div class="controls">
-                                                <input type="text" class="input-xxlarge" formControlName="email" required autofocus>
+                                                <input type="text" class="input-xlarge" formControlName="email" required autofocus>
                                                 <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                                                     <div class="error" *ngIf="f.email.errors.required">Email is required</div>
                                                     <div class="error" *ngIf="f.email.errors.email">Email must be a valid email address</div>
@@ -43,7 +43,7 @@
                                         <div class="control-group">
                                             <label class="control-label"><span class="required">*</span> Phone</label>
                                             <div class="controls">
-                                                <input type="text" class="input-xxlarge" formControlName="phone" required autofocus>
+                                                <input type="text" class="input-xlarge" formControlName="phone" required autofocus>
                                                 <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
                                                     <div class="error" *ngIf="f.phone.errors.required">Phone is required</div>
                                                 </div>
@@ -52,7 +52,7 @@
                                         <div class="control-group">
                                             <label class="control-label">Comment</label>
                                             <div class="controls">
-                                                <textarea type="text" formControlName="comment" style="height:22px;" class="input-xxlarge"></textarea>
+                                                <textarea type="text" formControlName="comment" style="height:22px;" class="input-xlarge"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -61,7 +61,7 @@
                                         <div class="control-group">
                                             <label class="control-label"><span class="required">*</span> Address:</label>
                                             <div class="controls">
-                                                <input type="text" class="input-xxlarge" formControlName="address" required autofocus>
+                                                <input type="text" class="input-xlarge" formControlName="address" required autofocus>
                                                 <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
                                                     <div class="error" *ngIf="f.address.errors.required">Address is required</div>
                                                 </div>
@@ -70,7 +70,7 @@
                                         <div class="control-group">
                                             <label class="control-label"><span class="required">*</span> City:</label>
                                             <div class="controls">
-                                                <input type="text" class="input-xxlarge" formControlName="city" required autofocus>
+                                                <input type="text" class="input-xlarge" formControlName="city" required autofocus>
                                                 <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
                                                     <div class="error" *ngIf="f.city.errors.required">City is required</div>
                                                 </div>
@@ -79,7 +79,7 @@
                                         <div class="control-group">
                                             <label class="control-label"><span class="required">*</span> Post Code:</label>
                                             <div class="controls">
-                                                <input type="text" class="input-xxlarge" formControlName="postcode" required autofocus>
+                                                <input type="text" class="input-xlarge" formControlName="postcode" required autofocus>
                                                 <div *ngIf="submitted && f.postcode.errors" class="invalid-feedback">
                                                     <div class="error" *ngIf="f.postcode.errors.required">First Name is required</div>
                                                 </div>
@@ -88,7 +88,7 @@
                                         <div class="control-group">
                                             <label class="control-label"><span class="required">*</span> Region / State:</label>
                                             <div class="controls">
-                                                <select name="zone_id" class="input-xxlarge" formControlName="state">
+                                                <select name="zone_id" class="input-xlarge" formControlName="state">
                                                     <option value="punjab">Punjab</option>
                                                 </select>
                                                 <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
@@ -99,7 +99,7 @@
                                         <div class="control-group">
                                             <label class="control-label"><span class="required">*</span> Country:</label>
                                             <div class="controls">
-                                                <select class="input-xxlarge" formControlName="country">
+                                                <select class="input-xlarge" formControlName="country">
                                                     <option value="1">India</option>
                                                 </select>
                                                 <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
@@ -110,10 +110,51 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <button class="btn btn-primary" style="background:#eb4800;border-color:#eb4800;width: 300px;height: 50px;font-size: 18px;">Submit</button>
+                                    <button class="btn btn-primary" style="background:#eb4800;border-color:#eb4800;width: 300px;height: 50px;font-size: 18px;">Place Order</button>
                                 </div>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>				
+        </div>
+        <div class="span4">
+            <div class="accordion" id="accordion2">
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Price Details</a>
+                    </div>
+                    <div id="collapseOne" class="accordion-body in collapse">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Product Name</th>
+                                    <th>Unit Price</th>
+                                    <th>Pieces</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="cart_arr.length > 0">
+                                <tr *ngFor="let cart of cart_arr; let indexOfelement=index">
+                                    <td><a href="product_detail.html"><img style="width:40px;" alt="" src="assets/themes/images/ladies/1.jpg"></a></td>
+                                    <td>{{cart.product_name}}</td>
+                                    <td>${{cart.price}}</td>
+                                    <td>{{cart.quantity}}</td>
+                                    <td>${{cart.total}}</td>
+                                </tr>			  		  
+                            </tbody>
+                        </table>
+                        <div>
+                            <div class="block">	
+                                <ul class="nav nav-list below">
+                                    <li>Sub-Total <span style="float:right;">${{cart_details.sub_total}}</span></li>
+                                    <li>Tax <span style="float:right;">{{cart_details.tax}}%</span></li>
+                                    <hr>
+                                    <li>Total <span style="float:right;">${{cart_details.total}}</span></li>
+                                </ul>
+                            </div>					
+                        </div>
                     </div>
                 </div>
             </div>				

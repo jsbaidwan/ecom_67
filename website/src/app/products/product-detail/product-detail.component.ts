@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import {Router, NavigationEnd } from '@angular/router';
 import { ProgressBarService } from '../../services/progress_bar/progress-bar.service'
+import { SharedService } from '../../services/shared/shared.service';
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
@@ -21,7 +22,8 @@ export class ProductDetailComponent implements OnInit {
     private route: ActivatedRoute, 
     private router: Router, 
     private http:HttpClient,
-    public progress_bar: ProgressBarService
+    public progress_bar: ProgressBarService,
+    private data: SharedService,
   ) 
   { 
     router.events.subscribe((val) => {
@@ -65,7 +67,7 @@ export class ProductDetailComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  add_to_cart(product_id, product_name, price, pcs) {
+  add_to_cart(product_id, product_name, price, pcs, type) {
     if(localStorage.getItem('cart') == null) {
       var item = [{
         "id": product_id,
@@ -92,7 +94,13 @@ export class ProductDetailComponent implements OnInit {
       cart.push(itemm);
       localStorage.setItem('cart', JSON.stringify(cart));
     }
-    this.router.navigateByUrl('/cart');
+    if(type == 'buy_now') {
+      this.data.changeMessage(this.cart_arr.length)
+      this.router.navigateByUrl('/order');
+    }
+    else {
+      this.router.navigateByUrl('/cart');
+    }
   }
 }
 

@@ -13,14 +13,18 @@ export class HeaderComponent implements OnInit {
     private data: SharedService,
   ) 
   {
+
   }
 
   ngOnInit(): void {
     this.data.currentMessage.subscribe(message => {
-      this.cart_items_count = message;
+      this.calculate_cart()
     })
     
   }
-
+  calculate_cart() {
+    var count = JSON.parse(localStorage.getItem('cart'));
+    this.cart_items_count = count.length;
+  }
 
 }

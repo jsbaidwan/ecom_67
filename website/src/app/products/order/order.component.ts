@@ -13,6 +13,8 @@ import { SpinnerService } from '../../services/spinner/spinner.service'
 export class OrderComponent implements OnInit {
   order_form: FormGroup;
   submitted = false;
+  cart_arr:any = [];
+  cart_details:any = [];
   constructor(
     private http: HttpClient,
     private formBuilder: FormBuilder, 
@@ -35,9 +37,38 @@ export class OrderComponent implements OnInit {
       country: ['', Validators.required],  
       state: ['', Validators.required],  
     });
+
+    if(localStorage.getItem('cart') != null) {
+      this.cart_arr = localStorage.getItem('cart');
+      this.cart_arr = JSON.parse(this.cart_arr);
+      if(this.cart_arr.length < 1) {
+        this.router.navigate(['']);
+      }
+      this.calculate_total();
+    }
+    else {
+      this.router.navigate(['']);
+    }
   }
   get f() { return this.order_form.controls; }
-
+  calculate_total() {
+    var sub_total = 0;
+    var total = 0;
+    var tax = 13;
+    var tax_amount:any = 0;
+    for (var i in this.cart_arr) {
+      this.cart_arr[i].total = this.cart_arr[i].price*this.cart_arr[i].quantity;
+      sub_total = sub_total+this.cart_arr[i].total;
+    }
+    tax_amount = (13/100)*sub_total;
+    total = sub_total+tax_amount;
+    this.cart_details = {
+      "sub_total" : sub_total,
+      "total" : total,
+      "tax" : "13",
+    };
+    this.data.changeMessage(this.cart_arr.length)
+  }
   onSubmit() {
     this.submitted = true;
     if (this.order_form.invalid) {

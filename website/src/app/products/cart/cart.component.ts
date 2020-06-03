@@ -47,7 +47,6 @@ export class CartComponent implements OnInit {
       "total" : total,
       "tax" : "13",
     };
-    // Subscribed function to update cart counter
     this.data.changeMessage(this.cart_arr.length)
   }
   update_cart(index,type) {
