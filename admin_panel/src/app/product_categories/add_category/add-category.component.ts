@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Router} from '@angular/router';
 import { NotificationService } from '../../services/toaster_notification/notification.service';
-
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-add-category',
   templateUrl: './add-category.component.html',
@@ -26,7 +26,7 @@ export class AddCategoryComponent implements OnInit {
     if (this.add_category_form.invalid) {
         return;
     }
-    this.http.post<any>('http://localhost/pos/backend/api/add_category', {
+    this.http.post<any>(environment.baseUrl+'/api/add_category', {
         category_name: this.add_category_form.get('category_name').value,
     }).subscribe(
       (data) => {

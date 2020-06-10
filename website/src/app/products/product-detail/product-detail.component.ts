@@ -5,6 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Router, NavigationEnd } from '@angular/router';
 import { ProgressBarService } from '../../services/progress_bar/progress-bar.service'
 import { SharedService } from '../../services/shared/shared.service';
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
@@ -33,7 +34,7 @@ export class ProductDetailComponent implements OnInit {
         this.route.params.subscribe(params => {
           this.product_id = params['id'];
         });
-        this.http.get<any>('http://localhost/pos/backend/api/get_product/'+this.product_id).subscribe(
+        this.http.get<any>(environment.baseUrl+'/api/get_product/'+this.product_id).subscribe(
           (data) => {
             this.progress_bar.hide();
             if(data.success) {
@@ -69,12 +70,9 @@ export class ProductDetailComponent implements OnInit {
   }
   add_to_cart(product_id, product_name, price, pcs, type) {
     if(localStorage.getItem('cart') == null) {
-      var item = [{
+      var item = [
+        {
         "id": product_id,
-        "product_name": product_name,
-        "price": price,
-        "total": price,
-        'pcs' : pcs,
         "quantity": 1
       }];
       localStorage.setItem('cart', JSON.stringify(item));
@@ -82,10 +80,6 @@ export class ProductDetailComponent implements OnInit {
     else {
       var itemm = {
         "id": product_id,
-        "product_name": product_name,
-        "price": price,
-        "total": price,
-        'pcs' : pcs,
         "quantity": 1
       };
       let cart: any = [];

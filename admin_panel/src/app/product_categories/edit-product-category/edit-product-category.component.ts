@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Router} from '@angular/router';
 import {ActivatedRoute} from '@angular/router';
 import { NotificationService } from '../../services/toaster_notification/notification.service';
-
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-edit-product-category',
   templateUrl: './edit-product-category.component.html',
@@ -20,7 +20,7 @@ export class EditProductCategoryComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.category_id = params['id'];
     });
-    this.http.get<any>('http://localhost/pos/backend/api/categories/'+this.category_id).subscribe(
+    this.http.get<any>(environment.baseUrl+'/api/categories/'+this.category_id).subscribe(
       (data) => {
         if(data.success) {
           this.edit_product_category_form = this.formBuilder.group({

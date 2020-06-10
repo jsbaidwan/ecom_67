@@ -149,9 +149,9 @@
                             <div class="block">	
                                 <ul class="nav nav-list below">
                                     <li>Sub-Total <span style="float:right;">${{cart_details.sub_total}}</span></li>
-                                    <li>Tax <span style="float:right;">{{cart_details.tax}}%</span></li>
+                                    <li>Tax({{cart_details.tax}}%)<span style="float:right;">${{cart_details.tax_amount.toFixed(2)}}</span></li>
                                     <hr>
-                                    <li>Total <span style="float:right;">${{cart_details.total}}</span></li>
+                                    <li>Total <span style="float:right;">${{cart_details.total.toFixed(2)}}</span></li>
                                 </ul>
                             </div>					
                         </div>

@@ -6,8 +6,7 @@ import { SharedService } from '../../services/shared/shared.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  cart_items_count: any;
-  count: number;
+  cart_items_count: any = 0;
   message:string;
   constructor(
     private data: SharedService,
@@ -23,8 +22,13 @@ export class HeaderComponent implements OnInit {
     
   }
   calculate_cart() {
-    var count = JSON.parse(localStorage.getItem('cart'));
-    this.cart_items_count = count.length;
+    if(localStorage.getItem('cart') != null) {
+      var count = JSON.parse(localStorage.getItem('cart'));
+      this.cart_items_count = count.length;
+    }
+    else {
+      this.cart_items_count = 0;
+    }
   }
 
 }

@@ -13,10 +13,10 @@
 </head>
 
 <body>
-    <div [ngClass]="{'page-container list-menu-view': router.url !== '/login' && router.url !== '/'}">
-        <app-left-bar *ngIf="router.url !== '/login' && router.url !== '/'"></app-left-bar>
-        <div [ngClass]="{'page-content': router.url !== '/login' && router.url !== '/'}">
-            <app-header *ngIf="router.url !== '/login' && router.url !== '/'"></app-header>
+    <div [ngClass]="{'page-container list-menu-view': router.url !== '/login' && router.url !== '/' && router.url !== '/reset_password'}">
+        <app-left-bar *ngIf="router.url !== '/login' && router.url !== '/' && router.url !== '/reset_password'"></app-left-bar>
+        <div [ngClass]="{'page-content': router.url !== '/login' && router.url !== '/' && router.url !== '/reset_password'}">
+            <app-header *ngIf="router.url !== '/login' && router.url !== '/' && router.url !== '/reset_password'"></app-header>
             <router-outlet></router-outlet>
         </div>
     </div>

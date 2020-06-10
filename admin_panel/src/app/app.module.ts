@@ -25,6 +25,8 @@ import { AddProductComponent } from './products/add-product/add-product.componen
 import { EditProductComponent } from './products/edit-product/edit-product.component';
 import { OrdersComponent } from './orders/orders/orders.component';
 import { OrderDetailComponent } from './orders/order-detail/order-detail.component';
+import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { OrderDetailComponent } from './orders/order-detail/order-detail.compone
     EditProductComponent,
     OrdersComponent,
     OrderDetailComponent,
+    ForgetPasswordComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,

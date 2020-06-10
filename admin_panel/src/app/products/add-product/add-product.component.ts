@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Router} from '@angular/router';
 import { NotificationService } from '../../services/toaster_notification/notification.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-add-product',
@@ -17,7 +18,7 @@ export class AddProductComponent implements OnInit {
   constructor(private http: HttpClient, private formBuilder: FormBuilder, private router: Router, private notifyService : NotificationService) {}
 
   ngOnInit() {
-    this.http.get<any>('http://localhost/pos/backend/api/get_categories').subscribe(
+    this.http.get<any>(environment.baseUrl+'/api/get_categories').subscribe(
       (data) => {
         if(data.success) {
           this.categories_arr = data.data;  
@@ -44,7 +45,7 @@ export class AddProductComponent implements OnInit {
     if (this.add_product_form.invalid) {
         return;
     }
-    this.http.post<any>('http://localhost/pos/backend/api/add_product', {
+    this.http.post<any>(environment.baseUrl+'/api/add_product', {
         product_name: this.add_product_form.get('product_name').value,
         category_id: this.add_product_form.get('category_id').value,
         price: this.add_product_form.get('price').value,

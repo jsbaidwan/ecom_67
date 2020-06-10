@@ -5,45 +5,46 @@ import {Router} from '@angular/router';
 import { NotificationService } from '../../services/toaster_notification/notification.service';
 import { environment } from '../../../environments/environment';
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  selector: 'app-forget-password',
+  templateUrl: './forget-password.component.html',
+  styleUrls: ['./forget-password.component.css']
 })
-export class LoginComponent implements OnInit {
-  login_form: FormGroup;
+export class ForgetPasswordComponent implements OnInit {
+
+  reset_password_link_form: FormGroup;
   submitted = false;
   constructor(private http: HttpClient, private formBuilder: FormBuilder, private router: Router, private notifyService : NotificationService) {}
 
   ngOnInit() {
-    this.login_form = this.formBuilder.group({
+    this.reset_password_link_form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
     });
   }
-  get f() { return this.login_form.controls; }
+  get f() { return this.reset_password_link_form.controls; }
   onSubmit() {
     // TODO: Use EventEmitter with form value
-    //console.warn(this.login_form.get('email').value);
+    //console.warn(this.reset_password_link_form.get('email').value);
     this.submitted = true;
-    //alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.login_form.value, null, 4));
-    if (this.login_form.invalid) {
+    //alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.reset_password_link_form.value, null, 4));
+    if (this.reset_password_link_form.invalid) {
         return;
     }
-    this.http.post<any>(environment.baseUrl+'/api/login', {
-        email: this.login_form.get('email').value,
-        password: this.login_form.get('password').value,
+    this.http.post<any>(environment.baseUrl+'/api/forget_password', {
+        email: this.reset_password_link_form.get('email').value,
     }).subscribe(
       (data) => {
         if(data.success) {
-          localStorage.setItem('currentUser', JSON.stringify(data));
-          this.notifyService.showSuccess(data.msg.text, "");
-          this.router.navigateByUrl('/dashboard');
+          //this.notifyService.showSuccess(data.msg.text, "");
+          //this.router.navigateByUrl('/dashboard');
         }
         else {
-          this.notifyService.showError("Email or password is incorrect.", "")  
+          for(var i in data.msg) {
+            this.notifyService.showError(data.msg[i], "");
+          }   
         }
       },
       (error) => this.notifyService.showError(error.message, "")
     );
   }
+
 }

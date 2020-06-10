@@ -13,9 +13,11 @@ import { AddProductComponent } from './products/add-product/add-product.componen
 import { EditProductComponent } from './products/edit-product/edit-product.component';
 import { OrdersComponent } from './orders/orders/orders.component';
 import { OrderDetailComponent } from './orders/order-detail/order-detail.component';
+import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'reset_password', component: ForgetPasswordComponent },
   { path: 'dashboard', canActivate : [AuthGuard], component: DashboardComponent },
   { path: 'edit_profile', canActivate : [AuthGuard], component: EditProfileComponent },
   { path: 'change_password', canActivate : [AuthGuard], component: ChangePasswordComponent },

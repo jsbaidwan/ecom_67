@@ -3,6 +3,7 @@ import { NotificationService } from './services/notification/notification.servic
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SpinnerService } from './services/spinner/spinner.service'
 import { ProgressBarService } from './services/progress_bar/progress-bar.service'
+import { environment } from '../environments/environment';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -20,7 +21,7 @@ export class AppComponent {
   show_progress_bar = this.progress_bar.visibility
   show_spinner = this.spinner.visibility
   ngOnInit(): void {
-    this.http.get<any>('http://localhost/pos/backend/api/get_categories').subscribe(
+    this.http.get<any>(environment.baseUrl+'/api/get_categories').subscribe(
       (data) => {
         if(data.success) {
           this.categories_arr = data.data;  

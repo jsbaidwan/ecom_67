@@ -149,4 +149,21 @@ class pages_controller extends Controller
         }
         return $this->response;
     }
+
+    ######### FUNCTION TO GET CART PRODUCTS DETAIL #########
+    function get_cart_products_detail(Request $request, $product_ids) {
+        $data['product_ids'] = $product_ids;
+        $validator = Validator::make($data, [
+            'product_ids' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $this->response['msg'] = $validator->messages();   
+        }
+        else {
+            $product_ids_arr = explode(',', $data['product_ids']);
+            $this->response['data'] = Product::whereIn('id', $product_ids_arr)->get();
+            $this->response['success'] = 1;
+        }
+        return $this->response;
+    }
 }

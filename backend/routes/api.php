@@ -26,6 +26,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
+
+####### FORGET PASSWORD ###########
+Route::post('forget_password', 'forget_password_controller@forget_password');
+Route::post('reset/password', 'users_controller@callResetPassword');
+
+
 ######## Category ###########
 Route::post('add_category', 'categories_controller@add_category')->middleware('auth:api');
 Route::get('categories', 'categories_controller@categories')->middleware('auth:api');
@@ -51,6 +57,6 @@ Route::get('get_products', 'pages_controller@get_products');
 Route::get('get_categories', 'pages_controller@get_categories');
 Route::get('get_product/{id}', 'pages_controller@get_product');
 Route::post('place_order/', 'pages_controller@place_order');
-
+Route::get('get_cart_products_detail/{id}', 'pages_controller@get_cart_products_detail');
 ######## WEBSITE ROUTES END ###########
 

@@ -5,6 +5,9 @@ import {Router} from '@angular/router';
 import { NotificationService } from '../../services/notification/notification.service';
 import { SharedService } from '../../services/shared/shared.service';
 import { SpinnerService } from '../../services/spinner/spinner.service'
+import { environment } from '../../../environments/environment';
+import { ProgressBarService } from '../../services/progress_bar/progress-bar.service'
+
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
@@ -15,6 +18,10 @@ export class OrderComponent implements OnInit {
   submitted = false;
   cart_arr:any = [];
   cart_details:any = [];
+  product_ids = "";
+  cart_quantity_arr:any = [];
+  show_cart_arr:any = [];
+  received_product_details_arr:any = [];
   constructor(
     private http: HttpClient,
     private formBuilder: FormBuilder, 
@@ -22,6 +29,7 @@ export class OrderComponent implements OnInit {
     private alert : NotificationService,
     private data: SharedService,
     private spinner: SpinnerService,
+    public progress_bar: ProgressBarService
   ) {}
 
   ngOnInit(): void {
@@ -44,7 +52,67 @@ export class OrderComponent implements OnInit {
       if(this.cart_arr.length < 1) {
         this.router.navigate(['']);
       }
-      this.calculate_total();
+      else {
+        this.progress_bar.show();
+        for (var i in this.cart_arr) {
+          this.cart_quantity_arr[this.cart_arr[i].id] = this.cart_arr[i].quantity
+          if(this.product_ids == '') {
+            this.product_ids = this.cart_arr[i].id
+          }
+          else {
+            this.product_ids = this.product_ids+','+this.cart_arr[i].id
+          }
+        }
+        this.http.get<any>(environment.baseUrl+'/api/get_cart_products_detail/'+this.product_ids).subscribe(
+          (data) => {
+            if(data.success) {
+              this.received_product_details_arr = data.data
+              var product_detail
+              var sub_total = 0;
+              for (var j in this.received_product_details_arr) {
+                var product_total_price = this.received_product_details_arr[j].price*this.cart_quantity_arr[this.received_product_details_arr[j].id]
+                var product_quantity = this.cart_quantity_arr[this.received_product_details_arr[j].id]
+                product_detail =
+                  {
+                    "id": this.received_product_details_arr[j].id,
+                    "product_name": this.received_product_details_arr[j].product_name,
+                    "price": this.received_product_details_arr[j].price,
+                    "total": product_total_price,
+                    'pcs' : this.received_product_details_arr[j].pcs,
+                    "quantity": product_quantity
+                  }
+                this.show_cart_arr.push(product_detail)
+                sub_total = sub_total+product_total_price;
+              }
+              this.cart_arr = this.show_cart_arr
+              
+              var total = 0;
+              var tax = 13;
+              var tax_amount:any = 0;
+              tax_amount = (13/100)*sub_total;
+              total = sub_total+tax_amount;
+              this.cart_details = {
+                "sub_total" : sub_total,
+                "total" : total,
+                "tax_amount": tax_amount,
+                "tax" : "13",
+              };
+              this.data.changeMessage(this.cart_arr.length)
+              this.progress_bar.hide();
+            }
+            else {
+              for(var i in data.msg) {
+                this.progress_bar.hide();
+                this.alert.showError(data.msg[i], "");
+              }  
+            }
+          },
+          (error => {
+            this.progress_bar.hide();
+            this.alert.showError(error.message, "")
+          })
+        );
+      }
     }
     else {
       this.router.navigate(['']);
@@ -65,6 +133,7 @@ export class OrderComponent implements OnInit {
     this.cart_details = {
       "sub_total" : sub_total,
       "total" : total,
+      "tax_amount": tax_amount,
       "tax" : "13",
     };
     this.data.changeMessage(this.cart_arr.length)
@@ -76,7 +145,7 @@ export class OrderComponent implements OnInit {
     }
     this.spinner.show();
     var purchased_items = JSON.parse(localStorage.getItem('cart'));
-    this.http.post<any>('http://localhost/pos/backend/api/place_order', {
+    this.http.post<any>(environment.baseUrl+'/api/place_order', {
       first_name: this.order_form.get('first_name').value,
       last_name: this.order_form.get('last_name').value,
       email: this.order_form.get('email').value,
@@ -92,9 +161,9 @@ export class OrderComponent implements OnInit {
       (data) => {
         this.spinner.hide();
         if(data.success) {
-          this.data.changeMessage('0');
           this.alert.showSuccess(data.msg.text, "");
           localStorage.removeItem('cart');
+          this.data.changeMessage('0');
           this.router.navigate(['']);
         }
         else {

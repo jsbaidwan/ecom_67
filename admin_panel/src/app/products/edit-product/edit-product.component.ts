@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Router} from '@angular/router';
 import {ActivatedRoute} from '@angular/router';
 import { NotificationService } from '../../services/toaster_notification/notification.service';
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-edit-product',
   templateUrl: './edit-product.component.html',
@@ -21,7 +22,7 @@ export class EditProductComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.product_id = params['id'];
     });
-    this.http.get<any>('http://localhost/pos/backend/api/products/'+this.product_id).subscribe(
+    this.http.get<any>(environment.baseUrl+'/api/products/'+this.product_id).subscribe(
       (data) => {
         if(data.success) {
           this.categories_arr = data.data.categories;
@@ -49,7 +50,7 @@ export class EditProductComponent implements OnInit {
     if (this.edit_product_form.invalid) {
         return;
     }
-    this.http.post<any>('http://localhost/pos/backend/api/update_product', {
+    this.http.post<any>(environment.baseUrl+'/api/update_product', {
       product_name: this.edit_product_form.get('product_name').value,
       price: this.edit_product_form.get('price').value,
       pcs: this.edit_product_form.get('pcs').value,

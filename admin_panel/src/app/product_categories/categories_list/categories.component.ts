@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NotificationService } from '../../services/toaster_notification/notification.service';
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
@@ -10,7 +11,7 @@ export class CategoriesComponent implements OnInit {
 categories_arr = '';
 constructor(private http: HttpClient, private notifyService : NotificationService) {}
   ngOnInit(): void {
-    this.http.get<any>('http://localhost/pos/backend/api/categories').subscribe(
+    this.http.get<any>(environment.baseUrl+'/api/categories').subscribe(
       (data) => {
         if(data.success) {
           this.categories_arr = data.data;
@@ -30,7 +31,7 @@ constructor(private http: HttpClient, private notifyService : NotificationServic
       this.notifyService.showError("Invalid Parameter.", "");
       return;
     }
-    this.http.post<any>('http://localhost/pos/backend/api/update_category_status', {
+    this.http.post<any>(environment.baseUrl+'/api/update_category_status', {
       status: status, 
       category_id: id,     
     }).subscribe(

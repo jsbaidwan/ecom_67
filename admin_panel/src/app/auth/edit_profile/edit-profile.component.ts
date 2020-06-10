@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Router} from '@angular/router';
 import { NotificationService } from '../../services/toaster_notification/notification.service';
 import{ AuthService } from '../../services/auth/auth.service';
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
@@ -24,7 +25,7 @@ export class EditProfileComponent implements OnInit {
     {}
 
   ngOnInit() {
-    this.http.get<any>('http://localhost/pos/backend/api/user').subscribe(
+    this.http.get<any>(environment.baseUrl+'/api/user').subscribe(
       (data) => {
         if(data.success) {
           this.edit_profile_form = this.formBuilder.group({
@@ -50,7 +51,7 @@ export class EditProfileComponent implements OnInit {
     if (this.edit_profile_form.invalid) {
         return;
     }
-    this.http.post<any>('http://localhost/pos/backend/api/save_profile', {
+    this.http.post<any>(environment.baseUrl+'/api/save_profile', {
       first_name: this.edit_profile_form.get('first_name').value,
       last_name: this.edit_profile_form.get('last_name').value,
       email: this.edit_profile_form.get('email').value,

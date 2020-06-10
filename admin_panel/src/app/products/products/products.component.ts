@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NotificationService } from '../../services/toaster_notification/notification.service';
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -11,7 +12,7 @@ export class ProductsComponent implements OnInit {
   products_arr = '';
   constructor(private http: HttpClient, private notifyService : NotificationService) {}
     ngOnInit(): void {
-      this.http.get<any>('http://localhost/pos/backend/api/products').subscribe(
+      this.http.get<any>(environment.baseUrl+'/api/products').subscribe(
         (data) => {
           if(data.success) {
             this.products_arr = data.data;
@@ -31,7 +32,7 @@ export class ProductsComponent implements OnInit {
         this.notifyService.showError("Invalid Parameter.", "");
         return;
       }
-      this.http.post<any>('http://localhost/pos/backend/api/update_product_status', {
+      this.http.post<any>(environment.baseUrl+'/api/update_product_status', {
         status: status, 
         product_id: id,     
       }).subscribe(
