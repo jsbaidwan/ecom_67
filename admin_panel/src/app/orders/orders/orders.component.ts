@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NotificationService } from '../../services/toaster_notification/notification.service';
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -11,7 +12,7 @@ export class OrdersComponent implements OnInit {
   constructor(private http: HttpClient, private notifyService : NotificationService) {}
 
   ngOnInit(): void {
-    this.http.get<any>('http://localhost/pos/backend/api/get_orders').subscribe(
+    this.http.get<any>(environment.baseUrl+'/api/get_orders').subscribe(
       (data) => {
         if(data.success) {
           this.orders_arr = data.data;
